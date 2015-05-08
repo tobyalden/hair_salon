@@ -24,6 +24,16 @@ post('/stylists') do
   erb(:stylists)
 end
 
+get('/stylist/:id') do
+  prep_stylist_page()
+  erb(:stylist)
+end
+
 define_method(:prep_stylists_page) do
   @stylists = Stylist.all()
+end
+
+define_method(:prep_stylist_page) do
+  stylist_id = params.fetch("id").to_i()
+  @stylist = Stylist.find(stylist_id)
 end

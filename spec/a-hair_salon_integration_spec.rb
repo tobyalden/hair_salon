@@ -24,8 +24,19 @@ describe("The path to add a stylist.", {:type => :feature}) do
   it("Displays a form on the stylists page that adds a stylist when submitted.") do
     visit('/')
     click_link('stylists')
-    fill_in("stylist_name", :with => "Brenda")
+    fill_in("stylist_name", :with => "Ray")
     click_button('add_stylist')
-    expect(page).to(have_content("Brenda"))
+    expect(page).to(have_content("Ray"))
+  end
+end
+
+describe("The path to visit a stylist's page.", {:type => :feature}) do
+  it("Displays a link on the stylists page to each stylist's individual page") do
+    test_stylist = Stylist.new({:id => nil, :name => "Ray"})
+    test_stylist.save()
+    visit('/')
+    click_link('stylists')
+    click_link(test_stylist.id)
+    expect(page).to(have_content(test_stylist.name))
   end
 end
