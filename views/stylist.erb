@@ -6,7 +6,16 @@
     <label for='new_name'>Enter a new name:</label>
     <input id='new_name' name='new_name' class='form-control' type='text'>
   </div>
-  <button id='update_name' class='btn-success'>Update Stylist</button>
+  <button id='update_stylist' class='btn-success'>Update Stylist</button>
+</form>
+
+<br>
+
+<form action='/stylist/<%= @stylist.id %>' method='post'>
+  <div class='form-group'>
+    <input name="_method" type="hidden" value="delete">
+    <button id='delete_stylist' class='btn-danger'>Delete Stylist</button>
+  </div>
 </form>
 
 <a href="/stylists">Back</a>

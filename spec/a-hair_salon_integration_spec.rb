@@ -49,7 +49,19 @@ describe("The path to update a stylist's name.", {:type => :feature}) do
     click_link('stylists')
     click_link(test_stylist.id)
     fill_in('new_name', :with => "Tina")
-    click_button('update_name')
+    click_button('update_stylist')
     expect(page).to(have_content("Tina"))
+  end
+end
+
+describe("The path to delete a stylist.", {:type => :feature}) do
+  it("Displays a button on a stylist's individual page to delete them.") do
+    test_stylist = Stylist.new({:id => nil, :name => "Ray"})
+    test_stylist.save()
+    visit('/')
+    click_link('stylists')
+    click_link(test_stylist.id)
+    click_button('delete_stylist')
+    expect(page).to(have_no_content("Ray"))
   end
 end

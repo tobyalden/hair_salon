@@ -36,6 +36,12 @@ patch('/stylist/:id') do
   erb(:stylist)
 end
 
+delete('/stylist/:id') do
+  Stylist.find(params.fetch("id").to_i()).delete()
+  prep_stylists_page()
+  erb(:stylists)
+end
+
 define_method(:prep_stylists_page) do
   @stylists = Stylist.all()
 end
