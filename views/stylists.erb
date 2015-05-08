@@ -1,1 +1,19 @@
 <h2>List of Stylists:</h2>
+
+<% if @stylists.any?() %>
+  <ul>
+    <% @stylists.each() do |stylist| %>
+    <li><a href='/stylist/<%= stylist.id() %>' id='<%= stylist.id() %>'><%= stylist.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no stylists.</p>
+<% end %>
+
+<form action='/stylists' method='post'>
+  <div class='form-group'>
+    <label for='stylist_name'>Enter stylist's name:</label>
+    <input id='stylist_name' name='stylist_name' class='form-control' type='text'>
+  </div>
+  <button id='add_stylist' class='btn-success'>Add Stylist</button>
+</form>
