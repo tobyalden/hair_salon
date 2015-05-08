@@ -29,6 +29,13 @@ get('/stylist/:id') do
   erb(:stylist)
 end
 
+patch('/stylist/:id') do
+  prep_stylist_page()
+  new_name = params.fetch("new_name")
+  @stylist.update({:name => new_name})
+  erb(:stylist)
+end
+
 define_method(:prep_stylists_page) do
   @stylists = Stylist.all()
 end
