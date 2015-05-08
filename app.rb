@@ -10,3 +10,7 @@ DB = PG.connect({:dbname => 'hair_salon'})
 get('/') do
   erb(:index)
 end
+
+get('/stylists') do
+  erb(:stylists)
+end
