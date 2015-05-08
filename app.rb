@@ -50,3 +50,43 @@ define_method(:prep_stylist_page) do
   stylist_id = params.fetch("id").to_i()
   @stylist = Stylist.find(stylist_id)
 end
+
+get('/clients') do
+  prep_clients_page()
+  erb(:clients)
+end
+
+post('/clients') do
+  client_name = params.fetch("client_name")
+  client = Client.new({:id => nil, :name => client_name, :stylist_id => nil})
+  client.save()
+  prep_clients_page()
+  erb(:clients)
+end
+
+get('/client/:id') do
+  prep_client_page()
+  erb(:client)
+end
+
+patch('/client/:id') do
+  prep_client_page()
+  new_name = params.fetch("new_name")
+  @client.update({:name => new_name})
+  erb(:client)
+end
+
+delete('/client/:id') do
+  Client.find(params.fetch("id").to_i()).delete()
+  prep_clients_page()
+  erb(:clients)
+end
+
+define_method(:prep_clients_page) do
+  @clients = Client.all()
+end
+
+define_method(:prep_client_page) do
+  client_id = params.fetch("id").to_i()
+  @client = Client.find(client_id)
+end
