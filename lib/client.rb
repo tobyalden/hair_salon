@@ -44,6 +44,10 @@ class Client
   define_method(:update) do |attributes|
     @name = attributes[:name]
     DB.exec("UPDATE clients SET name = '#{@name}' WHERE id = #{@id};")
+    if(attributes.has_key?(:stylist_id))
+      @stylist_id = attributes[:stylist_id]
+      DB.exec("UPDATE clients SET stylist_id = #{@stylist_id} WHERE id = #{@id};")
+    end
   end
 
   define_method(:delete) do

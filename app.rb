@@ -29,6 +29,15 @@ get('/stylist/:id') do
   erb(:stylist)
 end
 
+post('/stylist/:id') do
+  prep_stylist_page()
+  assigned_client_id = params.fetch("client_dropdown")
+  assigned_client = Client.find(assigned_client_id)
+  assigned_client.update({:name => assigned_client.name, :stylist_id => @stylist.id})
+  prep_stylist_page()
+  erb(:stylist)
+end
+
 patch('/stylist/:id') do
   prep_stylist_page()
   new_name = params.fetch("new_name")

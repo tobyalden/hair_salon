@@ -108,14 +108,17 @@ describe("The path to update a client's name.", {:type => :feature}) do
   end
 end
 
-describe("The path to delete a client.", {:type => :feature}) do
-  it("Displays a button on a client's individual page to delete them.") do
+describe("The path to assign a client to a stylist.", {:type => :feature}) do
+  it("Displays a form on a stylist's individual page that assigns a client to them when submitted.") do
+    test_stylist = Stylist.new({:id => nil, :name => "Ray"})
+    test_stylist.save()
     test_client = Client.new({:id => nil, :name => "Jeremy", :stylist_id => nil})
     test_client.save()
     visit('/')
-    click_link('clients')
-    click_link(test_client.id)
-    click_button('delete_client')
-    expect(page).to(have_no_content("Jeremy"))
+    click_link('stylists')
+    click_link(test_stylist.id)
+    select(test_client.name, :from => "client_dropdown")
+    click_button('assign_client')
+    expect(page).to(have_content("Jeremy"))
   end
 end
