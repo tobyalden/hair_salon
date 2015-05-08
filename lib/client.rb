@@ -17,7 +17,7 @@ class Client
       stylist_id = db_client.fetch('stylist_id').to_i()
       clients.push(Client.new({:id => id, :name => name, :stylist_id => stylist_id}))
     end
-    clients
+    return clients
   end
 
   define_singleton_method(:find) do |find_id|
@@ -33,7 +33,11 @@ class Client
   end
 
   define_method(:save) do
-    db_id = DB.exec("INSERT INTO clients (name) VALUES ('#{@name}') RETURNING id;")
+    if(@stylist_id != nil)
+      db_id = DB.exec("INSERT INTO clients (name, stylist_id) VALUES ('#{@name}', #{@stylist_id}) RETURNING id;")
+    else
+      db_id = DB.exec("INSERT INTO clients (name) VALUES ('#{@name}') RETURNING id;")
+    end
     @id = db_id.first().fetch('id').to_i()
   end
 
@@ -44,6 +48,18 @@ class Client
 
   define_method(:delete) do
     DB.exec("DELETE FROM clients WHERE id = #{@id}")
+  end
+
+  define_singleton_method(:find_by_stylist_id) do |find_stylist_id|
+    db_clients = DB.exec("SELECT * FROM clients WHERE stylist_id = #{find_stylist_id};")
+    clients = []
+    db_clients.each() do |db_client|
+      id = db_client.fetch('id').to_i()
+      name = db_client.fetch('name')
+      stylist_id = db_client.fetch('stylist_id').to_i()
+      clients.push(Client.new({:id => id, :name => name, :stylist_id => stylist_id}))
+    end
+    return clients
   end
 
 end

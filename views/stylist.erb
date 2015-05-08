@@ -11,6 +11,32 @@
 
 <br>
 
+<% if @stylists_clients.any?() %>
+  <ul>
+    <% @stylists_clients.each() do |client| %>
+    <li> <%= client.name %> </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>This stylist has no clients.</p>
+<% end %>
+
+<br>
+
+<form action='/stylist/<%= @stylist.id %>' method='post'>
+  <div class='form-group'>
+    <label for="client_dropdown">Select a Client</label>
+    <select id='client_dropdown' name='client_dropdown' type='text'>
+      <% @clients.each() do |client| %>
+      <option value="<%= client.id()%>"> <%= client.name() %> </option>
+      <% end %>
+    </select>
+  </div>
+  <button id='add_client' class='btn-primary'>Add Client</button>
+</form>
+
+<br>
+
 <form action='/stylist/<%= @stylist.id %>' method='post'>
   <div class='form-group'>
     <input name="_method" type="hidden" value="delete">

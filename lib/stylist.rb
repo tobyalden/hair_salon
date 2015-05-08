@@ -15,7 +15,7 @@ class Stylist
       name = db_stylist.fetch('name')
       stylists.push(Stylist.new({:id => id, :name => name}))
     end
-    stylists
+    return stylists
   end
 
   define_singleton_method(:find) do |find_id|

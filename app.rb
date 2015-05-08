@@ -49,6 +49,8 @@ end
 define_method(:prep_stylist_page) do
   stylist_id = params.fetch("id").to_i()
   @stylist = Stylist.find(stylist_id)
+  @clients = Client.all()
+  @stylists_clients = Client.find_by_stylist_id(stylist_id)
 end
 
 get('/clients') do
