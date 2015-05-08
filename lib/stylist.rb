@@ -41,6 +41,9 @@ class Stylist
 
   define_method(:delete) do
     DB.exec("DELETE FROM stylists WHERE id = #{@id}")
+    Client.all().each() do |client|
+      client.update(:name => client.name, :stylist_id => 0)
+    end
   end
 
 end

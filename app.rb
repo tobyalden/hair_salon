@@ -100,4 +100,9 @@ end
 define_method(:prep_client_page) do
   client_id = params.fetch("id").to_i()
   @client = Client.find(client_id)
+  if(@client.stylist_id == 0)
+    @stylist_message = "This client has not been assigned a stylist."
+  else
+    @stylist_message = "This client's stylist is: ".concat(Stylist.find(@client.stylist_id).name)
+  end
 end
